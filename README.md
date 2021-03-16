@@ -25,6 +25,8 @@ Chasing Bob gets punnished if he goes to the edge of the maps. (Negative feedbac
 Chasing Bob gets rewarded based on the time that he catches the Running Bob. (Positive feedback)
 
 We later realized that this rewarding system isn't complete at its current state since the world is big and to achive good results with randomness we would need much more generations. To reduce the needed gens we created special cases where we reward the agent more if agen uses the platforms to go to the target.
+![image](https://user-images.githubusercontent.com/60816119/111239188-f395da80-85f8-11eb-8a59-5544a8dcb814.png)
+
 (In the picture below you can see all of the target locations)
 ![image](https://user-images.githubusercontent.com/60816119/111233196-ce02d400-85ec-11eb-869b-2b7aa199ad9e.png)
 
@@ -41,6 +43,8 @@ By doing this chasing bob managed to learn how to get to the each target after 6
 We realized with this random method the agent tries to maximese the outcome by staying in one of the spawn zones with out trying to find the other ones. In order to avoid this problem we came up with a different spawning system for the targets.
 
 Now what we are doing is first we start by spawning randomly. In every 100 generation the program creates a heatmap for the most successfull targets and starts to spawn them less and gives more chance to other targets so that the learning will be the same for all of the locations. 
+
+
 
 
 Second Traning method:
