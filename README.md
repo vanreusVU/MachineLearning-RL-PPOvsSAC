@@ -28,9 +28,6 @@ We later realized that this rewarding system isn't complete at its current state
 ![image](https://user-images.githubusercontent.com/60816119/111239310-2cce4a80-85f9-11eb-9f6f-d32974a1c858.png)
 <br>
 
-![image](https://user-images.githubusercontent.com/60816119/111239783-30160600-85fa-11eb-97fb-e9680f1dc71f.png)
-
-
 <br>
 
 (In the picture below you can see all of the target locations)
