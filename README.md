@@ -25,8 +25,9 @@ Chasing Bob gets punnished if he goes to the edge of the maps. (Negative feedbac
 Chasing Bob gets rewarded based on the time that he catches the Running Bob. (Positive feedback)
 
 We later realized that this rewarding system isn't complete at its current state since the world is big and to achive good results with randomness we would need much more generations. To reduce the needed gens we created special cases where we reward the agent more if agen uses the platforms to go to the target.
-![image](https://user-images.githubusercontent.com/60816119/111239252-13c59980-85f9-11eb-922b-32b8007d36e9.png)
+![image](https://user-images.githubusercontent.com/60816119/111239310-2cce4a80-85f9-11eb-9f6f-d32974a1c858.png)
 
+<br>
 
 (In the picture below you can see all of the target locations)
 ![image](https://user-images.githubusercontent.com/60816119/111233196-ce02d400-85ec-11eb-869b-2b7aa199ad9e.png)
