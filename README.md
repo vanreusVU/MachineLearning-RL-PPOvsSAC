@@ -26,6 +26,10 @@ Chasing Bob gets rewarded based on the time that he catches the Running Bob. (Po
 
 We later realized that this rewarding system isn't complete at its current state since the world is big and to achive good results with randomness we would need much more generations. To reduce the needed gens we created special cases where we reward the agent more if agen uses the platforms to go to the target.
 ![image](https://user-images.githubusercontent.com/60816119/111239310-2cce4a80-85f9-11eb-9f6f-d32974a1c858.png)
+<br>
+
+![image](https://user-images.githubusercontent.com/60816119/111239783-30160600-85fa-11eb-97fb-e9680f1dc71f.png)
+
 
 <br>
 
