@@ -2,6 +2,7 @@
 
 ## Algorithms that we will be using
 PPO and SAC: https://github.com/Unity-Technologies/ml-agents/blob/release_12/docs/ML-Agents-Overview.md#deep-reinforcement-learning
+<br>
 Hyperparameteres: https://github.com/Unity-Technologies/ml-agents/blob/release_12/docs/Training-Configuration-File.md
 
 ## The concept of the game:
@@ -51,6 +52,9 @@ We realized with this random method the agent tries to maximese the outcome by s
 
 Now what we are doing is first we start by spawning randomly. In every 100 generation the program creates a heatmap for the most successfull targets and starts to spawn them less and gives more chance to other targets so that the learning will be the same for all of the locations. 
 
+
+## Rewarding
+![image](https://user-images.githubusercontent.com/60816119/111834916-8e8dfd80-88f4-11eb-92a9-ac6c0cb3056e.png)
 
 
 
