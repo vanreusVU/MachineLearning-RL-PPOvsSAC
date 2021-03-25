@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using TMPro;
 using TMPro.Examples;
@@ -12,15 +13,21 @@ public struct SpawnLocation
     public GameObject spawnLocation;
     public BlockRewardScript[] platformsToReward;
     public float platformReward;
+    [HideInInspector]
+    public float heat;
 }
 
 public class EnvironmentManager : MonoBehaviour
 {
-    [Header("Players")]
+    [HideInInspector]
     public GameObject[] agents;
+    [HideInInspector]
     public GameObject target;
 
-    [Header("Scene Settings")] 
+    [Header("Heat Settings")]
+    public float heatRecution = 0.005f;
+
+    [Header("Scene Settings")]
     public int numberOfAgentsToSpawn = 5; // How many agents to spawn per generation
     public float distanceFromCenter = 5.0f; // The spawn location for the agents 
     public GameObject playerPrefab;
@@ -32,13 +39,52 @@ public class EnvironmentManager : MonoBehaviour
     public TextMeshPro stepCountText;
     public TextMeshPro generationText;
     
+
+
+    private MasterScene _heatScript;
+    private int _randomPlatform;
+
+    public void ReduceTargetHeat()
+    {
+        if (_heatScript.heatMap[_randomPlatform].heat <= 0.5f)
+        {
+            _heatScript.heatMap[_randomPlatform].heat = 0.5f;
+        }
+        else
+        {
+            _heatScript.heatMap[_randomPlatform].heat -= heatRecution;
+        }
+        
+        _heatScript.updateHeatUI();
+    }
+
+    public void RandomSpawnLocation()
+    {
+        float totalHeat = _heatScript.getTotalHeat();
+        Debug.Log("Total Heat = " + totalHeat);
+        float randHeatSelection = Random.Range(0f, totalHeat);
+        Debug.Log("RandomHeatSelection = " + randHeatSelection);
+        float prevHeat = 0f;
+        for (int i = 0; i <  _heatScript.heatMap.Length; i++) // Choose 
+        {
+            if (randHeatSelection >= prevHeat && randHeatSelection < prevHeat +  _heatScript.heatMap[i].heat)
+            {
+                _randomPlatform = i;
+                break;
+            }
+            prevHeat +=  _heatScript.heatMap[i].heat;
+        }
+
+        _heatScript.heatMap[_randomPlatform].timesSpawned++;
+        Debug.Log("RandomPlatform: " + _randomPlatform.ToString());
+    }
     public void SetupScene()
     {
         DefaultColor();
         
         target.transform.parent = this.gameObject.transform; // Set target as the child object of the scene
         
-        int randomPlatform = Random.Range(0, spawnLocations.Length);
+        RandomSpawnLocation();
         
         
         foreach (SpawnLocation spawnLocation in spawnLocations) // Reset Everything
@@ -48,13 +94,13 @@ public class EnvironmentManager : MonoBehaviour
                 blockRewardScript.ResetPlatform();
             }
         }
-        foreach (BlockRewardScript blockRewardScript in spawnLocations[randomPlatform].platformsToReward) // Activate the current ones
+        foreach (BlockRewardScript blockRewardScript in spawnLocations[_randomPlatform].platformsToReward) // Activate the current ones
         {
             blockRewardScript.isActive = true;
-            blockRewardScript.reward = spawnLocations[randomPlatform].platformReward;
+            blockRewardScript.reward = spawnLocations[_randomPlatform].platformReward;
         }
         
-        target.transform.localPosition = spawnLocations[randomPlatform].spawnLocation.transform.localPosition; // Sets a new location for the target
+        target.transform.localPosition = spawnLocations[_randomPlatform].spawnLocation.transform.localPosition; // Sets a new location for the target
         
 
         //StartCoroutine( sceneTimer());
@@ -76,10 +122,9 @@ public class EnvironmentManager : MonoBehaviour
             agents[i].transform.parent = this.gameObject.transform; // Set agent as the child object of the scene
             agents[i].transform.localPosition = new Vector3(distanceFromCenter * -1, 0, 0);
         }
-        
-        foreach (SpawnLocation spawnLocation in spawnLocations) // Reset Everything
+        foreach (SpawnLocation loc in spawnLocations) // Reset Everything
         {
-            foreach (BlockRewardScript blockRewardScript in spawnLocation.platformsToReward)
+            foreach (BlockRewardScript blockRewardScript in loc.platformsToReward)
             {
                 blockRewardScript.parentScene = this;
                 blockRewardScript.agent = agents[0].GetComponent<BobController>();
@@ -90,6 +135,13 @@ public class EnvironmentManager : MonoBehaviour
 
     void Start() // This is like the main() function. This will be executed first
     {
+        
+        _heatScript = Object.FindObjectOfType<MasterScene>();
+
+        _heatScript.initHeatMap(spawnLocations.Length);
+        _heatScript.resetHeat();
+        _heatScript.updateHeatUI();
+        
         SpawnAgent();
         //SetupScene();
     }

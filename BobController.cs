@@ -14,14 +14,11 @@ public struct StepByValue
 {
     public int distance;
     public float reward;
-    [HideInInspector]
-    public float heat;
 
-    public StepByValue(int myDistance, float myReward, float myHeat)
+    public StepByValue(int myDistance, float myReward)
     {
         this.distance = myDistance;
         this.reward = myReward;
-        this.heat = myHeat;
         return;
     }
 }
@@ -84,6 +81,8 @@ public class BobController : Agent
 
     public float extraReward = 0.0f;
 
+    private bool targetFound = true;
+    
     // Start is called before the first frame update
     private void Awake()
     {
@@ -106,14 +105,20 @@ public class BobController : Agent
 
     public override void OnEpisodeBegin() // This is being called in every episode
     {
+        if (!targetFound)
+        {
+            AddReward(-0.5f);
+        }
+
+        targetFound = false;
         // Reset the player
         extraReward = 0;
         if(parentScene != null)
             parentScene.SetupScene();
-        this.transform.localPosition = new Vector3(-5.5f, 0, 0);
+        this.transform.localPosition = new Vector3(0, 0, 0);
         UpdateStats();
     }
-    
+
     public override void OnActionReceived(float[] vectorAction) // On every tick vector action recieves a random value between -1 and 1
     {
         moveAgent(vectorAction[0]); // We use the first random variable for movement
@@ -220,6 +225,8 @@ public class BobController : Agent
 
         if (other.gameObject == targetEnemy) // Called when the player touches the target
         {
+            targetFound = true;
+            parentScene.ReduceTargetHeat();
             GivePoints();
             /*AddReward(5f); // Give reward to the agent
             parentScene.WinColor(); // Set the indicator color to green (for debug)
