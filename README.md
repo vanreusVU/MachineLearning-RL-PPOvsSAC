@@ -46,11 +46,35 @@ Running Bob gets punnished if he goes to the edge of the maps. (Negative feedbac
 ## Training
 ### Chasing Bob
 The way we trained chasing bob is based on randomly placing stationary targets on predefined locations in the world.
-By doing this chasing bob managed to learn how to get to the each target after 6192 generations.
+By doing this chasing bob started to learn how to get to mo each target after 200th generations (out of 500). However, this also brought some problems with it.
 
-We realized with this random method the agent tries to maximese the outcome by staying in one of the spawn zones with out trying to find the other ones. In order to avoid this problem we came up with a different spawning system for the targets.
+What we first realized is the agent always goes to as spesific spawnlocation first before trying to find the real target because what the agent realised is if he keeps going to that one spesific location he will get rewarded at somepoint. That's why the agent always goes to that point at starts exploring from there if he didn't get rewarded.In order to avoid this problem we came up with a different spawning system for the targets and we call it a heatMap.
 
-Now what we are doing is first we start by spawning randomly. In every 100 generation the program creates a heatmap for the most successfull targets and starts to spawn them less and gives more chance to other targets so that the learning will be the same for all of the locations. 
+![image](https://user-images.githubusercontent.com/60816119/112476007-bc01fd80-8d71-11eb-8df2-9ac917a56292.png)
+
+Every spawn location starts with the heat of 1. Which means that at the start of the training all of the spawn locations have the same probability to be selected.
+We select a random float between 0.1 and [totalAmountOfHeat] (inclusive). Which is 1 * [amountOfTargetLocations] at the begining of the traning.
+
+![image](https://user-images.githubusercontent.com/60816119/112476282-071c1080-8d72-11eb-9085-42adbeb3e823.png)
+
+After geting the random float number we select the spawnLocation that the randomNumber fits in.
+Lets assume the random number is 3.86 and we have 4 spawn locations {A, B, C, D}
+
+is [A] if: 0.1 >= x <= 1.0 
+is [B] if: 1.1 >= x <= 2.0
+is [C] if: 2.1 >= x <= 3.0
+is [D] if: 3.1 >= x <= 4.0
+
+in our case the random number is 3.86 so we choose de spawnLocation D
+
+![image](https://user-images.githubusercontent.com/60816119/112476735-84478580-8d72-11eb-849c-8264bb40d557.png)
+
+Eveytime the agent manages to find the target the heat gets reduced by 0.005 (untill 0.5) which also lowers the probability of that spesific location. Which means the range gets lower.
+
+![image](https://user-images.githubusercontent.com/60816119/112477933-c0c7b100-8d73-11eb-8a66-29cac5aeb55e.png)
+
+
+And now in every 100 generation the program creates a heatmap for the most successfull targets and starts to spawn them less and gives more chance to other targets so that the learning will be the same for all of the locations. 
 
 
 ## Rewarding
