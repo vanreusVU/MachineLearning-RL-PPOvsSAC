@@ -85,4 +85,11 @@ And now in every 100 generation the program creates a heatmap for the most succe
 Second Traning method:
 
 ## Extra
-We train for 500.000 steps. In every steps the agent recives an input array of size 2 with float values between [-1 and 1]. The agent can take up to max 1000 steps.
+We train for 500.000 steps. In every steps the agent recives an [Continues] input array of size 2 with float values between [-1 and 1] which is used in AGENT MOVEMENT (explained below). The agent can take up to max 1000 steps.
+
+## Agent Movement
+From the MLAGENTS GITHUB
+
+Continues Input:
+> When an Agent's Policy has Continuous actions, the ActionBuffers.ContinuousActions passed to the Agent's OnActionReceived() function is an array with length equal to the Continuous Action Size property value. The individual values in the array have whatever meanings that you ascribe to them. If you assign an element in the array as the speed of an Agent, for example, the training process learns to control the speed of the Agent through this parameter.
+
