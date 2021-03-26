@@ -83,3 +83,6 @@ And now in every 100 generation the program creates a heatmap for the most succe
 
 
 Second Traning method:
+
+## Extra
+We train for 500.000 steps. In every steps the agent recives an input array of size 2 with float values between [-1 and 1]. The agent can take up to max 1000 steps.
