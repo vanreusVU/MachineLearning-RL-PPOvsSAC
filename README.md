@@ -1,4 +1,4 @@
-# MachineLearningPIZZAHAWAI
+# MachineLearning PIZZAHAWAI
 
 ## Algorithms that we will be using
 PPO and SAC: https://github.com/Unity-Technologies/ml-agents/blob/release_12/docs/ML-Agents-Overview.md#deep-reinforcement-learning
